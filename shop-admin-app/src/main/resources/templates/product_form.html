@@ -34,9 +34,22 @@
                     <p class="text-danger" th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></p>
                 </div>
                 <div class="form-group">
-                    <label>Category</label>
-                    <input type="text" class="form-control" id="category" th:field="*{category}" placeholder="Enter category">
-                    <p class="text-danger" th:if="${#fields.hasErrors('category')}" th:errors="*{category}"></p>
+                    <label for="categories">Category</label>
+                    <select class="form-control" id="categories" name="category" required>
+                        <option th:each="category : ${categories}"
+                                th:text="${category.categoryname}"
+                                th:value="${category.id}"
+                                th:selected="${product.category?.id == category.id}"></option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="categories">Brand</label>
+                    <select class="form-control" id="brands" name="brand" required>
+                        <option th:each="brand : ${brands}"
+                                th:text="${brand.brandname}"
+                                th:value="${brand.id}"
+                                th:selected="${product.brand?.id == brand.id}"></option>
+                    </select>
                 </div>
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>

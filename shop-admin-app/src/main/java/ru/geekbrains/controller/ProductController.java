@@ -9,7 +9,9 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import ru.geekbrains.persist.Product;
+import ru.geekbrains.persist.model.Product;
+import ru.geekbrains.service.BrandService;
+import ru.geekbrains.service.CategoryService;
 import ru.geekbrains.service.ProductService;
 
 import javax.validation.Valid;
@@ -20,10 +22,13 @@ public class ProductController {
     private static final Logger logger = LoggerFactory.getLogger(ProductController.class);
 
     private final ProductService productService;
-
+    private final CategoryService categoryService;
+    private final BrandService brandService;
     @Autowired
-    public ProductController(ProductService productService) {
+    public ProductController(ProductService productService, CategoryService categoryService, BrandService brandService) {
         this.productService = productService;
+        this.categoryService = categoryService;
+        this.brandService = brandService;
     }
 
     @GetMapping
@@ -41,6 +46,8 @@ public class ProductController {
         logger.info("New product page requested");
 
         model.addAttribute("product", new Product());
+        model.addAttribute("categories", categoryService.findAll());
+        model.addAttribute("brands", brandService.findAll());
         return "product_form";
     }
 
@@ -49,6 +56,8 @@ public class ProductController {
 
         model.addAttribute("product", productService.findById(id)
                 .orElseThrow(() -> new NotFoundException("User not found")));
+        model.addAttribute("categories", categoryService.findAll());
+        model.addAttribute("brands", brandService.findAll());
         return "product_edit";
     }
 

@@ -43,8 +43,24 @@
                     <td > <input type="text" class="form-control" id="price" th:field="*{price}" >
                         <p class="text-danger" th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></p></td>
 
-                    <td >  <input type="text" class="form-control" id="category" th:field="*{category}" >
-                        <p class="text-danger" th:if="${#fields.hasErrors('category')}" th:errors="*{category}"></p>  </td>
+                    <td >        <div class="form-group">
+
+                        <select class="form-control" id="categories" name="category" required>
+                            <option th:each="category : ${categories}"
+                                    th:text="${category.categoryname}"
+                                    th:value="${category.id}"
+                                    th:selected="${product.category?.id == category.id}"></option>
+                        </select>
+                    </div>  </td>
+                    <td >        <div class="form-group">
+
+                        <select class="form-control" id="brands" name="brand" required>
+                            <option th:each="brand : ${brands}"
+                                    th:text="${brand.brandname}"
+                                    th:value="${brand.id}"
+                                    th:selected="${product.brand?.id == brand.id}"></option>
+                        </select>
+                    </div>  </td>
                     <td>
                         <input type="hidden" id="id" th:field="*{id}">
 
