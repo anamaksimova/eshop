@@ -9,10 +9,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import ru.geekbrains.persist.Category;
-import ru.geekbrains.persist.Product;
+import ru.geekbrains.persist.model.Category;
 import ru.geekbrains.service.CategoryService;
-import ru.geekbrains.service.ProductService;
 
 import javax.validation.Valid;
 
@@ -54,7 +52,7 @@ public class CategoryController {
     }
 
     @PostMapping
-    public String update(@Valid Category category, BindingResult result) {
+    public String update(@Valid CategoryDto category, BindingResult result) {
         logger.info("Saving category");
         if (result.hasErrors()) {
             return "category_form";

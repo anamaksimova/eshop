@@ -45,7 +45,7 @@ public class ProductController {
     public String newProductForm(Model model) {
         logger.info("New product page requested");
 
-        model.addAttribute("product", new Product());
+        model.addAttribute("product", new ProductDto());
         model.addAttribute("categories", categoryService.findAll());
         model.addAttribute("brands", brandService.findAll());
         return "product_form";
@@ -62,7 +62,7 @@ public class ProductController {
     }
 
     @PostMapping
-    public String update(@Valid Product product, BindingResult result) {
+    public String update(@Valid ProductDto product, BindingResult result) {
         logger.info("Saving product");
         if (result.hasErrors()&&product.getId()==null) {
             return "product_form";

@@ -3,6 +3,8 @@ package ru.geekbrains.persist.model;
 import ru.geekbrains.persist.model.Category;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Entity
@@ -20,6 +22,8 @@ public class Product {
 @Column(nullable = false)
     private Float price;
 
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    private List<Picture> pictures = new ArrayList<>();
 
     @ManyToOne
     @JoinColumn(name = "category_id")
@@ -72,4 +76,11 @@ public class Product {
 
     public void setBrand(Brand brand) {
         this.brand = brand;}
+    public List<Picture> getPictures() {
+        return pictures;
+    }
+
+    public void setPictures(List<Picture> pictures) {
+        this.pictures = pictures;
+    }
 }
