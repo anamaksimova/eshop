@@ -25,19 +25,19 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public List<CategoryDto> findAll() {
         return categoryRepository.findAll().stream()
-                .map(category -> new CategoryDto(category.getId(), category.getCategoryname()))
+                .map(category -> new CategoryDto(category.getId(), category.getName()))
                 .collect(Collectors.toList());
     }
 
     @Override
     public Page<CategoryDto> findAll(Integer page, Integer size, String sortField) {
         return categoryRepository.findAll(PageRequest.of(page, size, Sort.by(sortField)))
-                .map(category -> new CategoryDto(category.getId(), category.getCategoryname()));
+                .map(category -> new CategoryDto(category.getId(), category.getName()));
     }
     @Override
     public Optional<CategoryDto> findById(Long id) {
         return categoryRepository.findById(id)
-                .map(category -> new CategoryDto(category.getId(), category.getCategoryname()));
+                .map(category -> new CategoryDto(category.getId(), category.getName()));
     }
 
     @Override

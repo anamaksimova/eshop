@@ -7,10 +7,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-import ru.geekbrains.controller.CategoryDto;
-import ru.geekbrains.controller.NotFoundException;
-import ru.geekbrains.controller.ProductDto;
-import ru.geekbrains.controller.ProductListParams;
+import ru.geekbrains.controller.*;
+import ru.geekbrains.persist.BrandRepository;
 import ru.geekbrains.persist.CategoryRepository;
 import ru.geekbrains.persist.model.Category;
 import ru.geekbrains.persist.model.Picture;
@@ -27,15 +25,16 @@ public class ProductServiceImpl implements ProductService {
     private final ProductRepository productRepository;
 
     private final CategoryRepository categoryRepository;
-
+    private final BrandRepository brandRepository;
     private final PictureService pictureService;
 
     @Autowired
     public ProductServiceImpl(ProductRepository productRepository,
                               CategoryRepository categoryRepository,
-                              PictureService pictureService) {
+                              BrandRepository brandRepository, PictureService pictureService) {
         this.productRepository = productRepository;
         this.categoryRepository = categoryRepository;
+        this.brandRepository = brandRepository;
         this.pictureService = pictureService;
     }
 
@@ -45,7 +44,8 @@ public class ProductServiceImpl implements ProductService {
                 .map(product -> new ProductDto(product.getId(),
                         product.getName(),
                         product.getPrice(),
-                        new CategoryDto(product.getCategory().getId(), product.getCategory().getCategoryname())));
+                        new CategoryDto(product.getCategory().getId(), product.getCategory().getName()),
+                         new BrandDto(product.getBrand().getId(), product.getBrand().getName())));
     }
 
     @Override
@@ -80,7 +80,8 @@ public class ProductServiceImpl implements ProductService {
                 .map(product -> new ProductDto(product.getId(),
                         product.getName(),
                         product.getPrice(),
-                        new CategoryDto(product.getCategory().getId(), product.getCategory().getCategoryname())));
+                        new CategoryDto(product.getCategory().getId(), product.getCategory().getName()),
+        new BrandDto(product.getBrand().getId(), product.getBrand().getName())));
     }
 
     @Override

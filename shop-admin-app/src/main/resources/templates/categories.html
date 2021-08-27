@@ -39,7 +39,7 @@
                 <tbody>
                 <tr th:if="${!categories.isEmpty()}" th:each="category : ${categories}">
                     <th scope="row" th:text="${category.id}">1</th>
-                    <td th:text="${category.categoryname}">Food</td>
+                    <td th:text="${category.name}">Food</td>
 
                     <form sec:authorize="hasRole('ADMIN')" > <td>
                         <a class="btn btn-success" th:href="@{/category/{id}(id = ${category.id})}"><i class="fas fa-edit"></i></a>

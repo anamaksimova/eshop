@@ -3,6 +3,7 @@ package ru.geekbrains.controller;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Set;
 
 public class ProductDto {
 
@@ -13,19 +14,22 @@ public class ProductDto {
     private Float price;
 
     private CategoryDto category;
+    private BrandDto brand;
 
     private List<Long> pictures;
 
     private MultipartFile[] newPictures;
-
+    private Set<CategoryDto> categories;
+    private Set<BrandDto> brands;
     public ProductDto() {
     }
 
-    public ProductDto(Long id, String name,  Float price, CategoryDto category) {
+    public ProductDto(Long id, String name,  Float price, CategoryDto category,BrandDto brand) {
         this.id = id;
         this.name = name;
         this.price = price;
         this.category = category;
+        this.brand = brand;
     }
 
     public Long getId() {
@@ -53,6 +57,13 @@ public class ProductDto {
     public void setPrice(Float price) {
         this.price = price;
     }
+    public BrandDto getBrand() {
+        return brand;
+    }
+
+    public void setBrand(BrandDto brand) {
+        this.brand = brand;
+    }
 
     public CategoryDto getCategory() {
         return category;
@@ -76,5 +87,19 @@ public class ProductDto {
 
     public void setNewPictures(MultipartFile[] newPictures) {
         this.newPictures = newPictures;
+    }
+    public Set<CategoryDto> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(Set<CategoryDto> categories) {
+        this.categories = categories;
+    }
+    public Set<BrandDto> getBrands() {
+        return brands;
+    }
+
+    public void setBrands(Set<BrandDto> brands) {
+        this.brands = brands;
     }
 }

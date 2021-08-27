@@ -68,8 +68,8 @@
                     <th scope="row" th:text="${product.id}">1</th>
                     <td th:text="${product.name}">prod</td>
                     <td th:text="${product.price}">price</td>
-                    <td th:text="${product.category.getCategoryname}">category</td>
-                    <td th:text="${product.brand.getBrandname}">category</td>
+                    <td th:text="${product.category.getName}">category</td>
+                    <td th:text="${product.brand.getName}">brand</td>
                     <td>
                         <a class="btn btn-success" th:href="@{/product/{id}(id = ${product.id})}"><i class="fas fa-edit"></i></a>
                         <form class="d-inline" th:method="delete" th:action="@{/product/{id}(id = ${product.id})}">
