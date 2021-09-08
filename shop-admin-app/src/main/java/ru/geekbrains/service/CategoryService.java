@@ -1,20 +1,19 @@
 package ru.geekbrains.service;
 
 import org.springframework.data.domain.Page;
-import ru.geekbrains.controller.ProductListParams;
-import ru.geekbrains.persist.Category;
-import ru.geekbrains.persist.Product;
+import ru.geekbrains.controller.CategoryDto;
+import ru.geekbrains.persist.model.Category;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface CategoryService {
-    List<Category> findAll();
+    List<CategoryDto> findAll();
 
+    Page<CategoryDto> findAll(Integer page, Integer size, String sortField);
+    Optional<CategoryDto> findById(Long id);
 
-    Optional<Category> findById(Long id);
-
-    void save(Category category);
+    void save(CategoryDto category);
 
     void deleteById(Long id);
 }

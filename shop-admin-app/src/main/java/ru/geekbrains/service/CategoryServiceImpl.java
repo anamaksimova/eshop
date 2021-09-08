@@ -4,13 +4,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
-import ru.geekbrains.controller.ProductListParams;
+import ru.geekbrains.controller.CategoryDto;
 import ru.geekbrains.persist.*;
+import ru.geekbrains.persist.model.Category;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class CategoryServiceImpl implements CategoryService {
@@ -22,21 +23,28 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public List<Category> findAll() {
-        return categoryRepository.findAll();
-    }
-
-
-    @Override
-    public Optional<Category> findById(Long id) {
-        return categoryRepository.findById(id);
+    public List<CategoryDto> findAll() {
+        return categoryRepository.findAll().stream()
+                .map(category -> new CategoryDto(category.getId(), category.getName()))
+                .collect(Collectors.toList());
     }
 
     @Override
-    public void save(Category category) {
+    public Page<CategoryDto> findAll(Integer page, Integer size, String sortField) {
+        return categoryRepository.findAll(PageRequest.of(page, size, Sort.by(sortField)))
+                .map(category -> new CategoryDto(category.getId(), category.getName()));
+    }
+    @Override
+    public Optional<CategoryDto> findById(Long id) {
+        return categoryRepository.findById(id)
+                .map(category -> new CategoryDto(category.getId(), category.getName()));
+    }
+
+    @Override
+    public void save(CategoryDto categoryDto) {
+        Category category = new Category(categoryDto.getId(), categoryDto.getName());
         categoryRepository.save(category);
     }
-
     @Override
     public void deleteById(Long id) {
         categoryRepository.deleteById(id);

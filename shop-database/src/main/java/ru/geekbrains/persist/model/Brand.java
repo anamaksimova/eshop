@@ -16,7 +16,7 @@ public class Brand {
 
 
     @Column(name = "brandname")
-    private String brandname;
+    private String name;
 
     @JsonIgnore
     @OneToMany(mappedBy = "brand")
@@ -26,9 +26,9 @@ public class Brand {
 
     }
 
-    public Brand(Long id, String brandname) {
+    public Brand(Long id, String name) {
         this.id = id;
-        this.brandname = brandname;
+        this.name = name;
 
     }
 
@@ -36,8 +36,8 @@ public class Brand {
         return id;
     }
 
-    public String getBrandname() {
-        return brandname;
+    public String getName() {
+        return name;
     }
 
 
@@ -45,8 +45,8 @@ public class Brand {
         this.id = id;
     }
 
-    public void setBrandname(String brandname) {
-        this.brandname = brandname;
+    public void setName(String name) {
+        this.name = name;
     }
     public List<Product> getProducts() {
         return products;

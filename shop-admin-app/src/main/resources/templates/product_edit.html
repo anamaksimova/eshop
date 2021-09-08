@@ -30,11 +30,12 @@
                     <th scope="col">Product</th>
                     <th scope="col">Price</th>
                     <th scope="col">Category</th>
+                    <th scope="col">Brand</th>
                     <th scope="col">Actions</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr ><form th:action="@{/product}" method="post" th:object="${product}">
+                <tr ><form th:action="@{/product}" method="post" th:object="${product}" enctype="multipart/form-data">
                     <th scope="row" th:text="${product.id}">1</th>
 
 
@@ -47,7 +48,7 @@
 
                         <select class="form-control" id="categories" name="category" required>
                             <option th:each="category : ${categories}"
-                                    th:text="${category.categoryname}"
+                                    th:text="${category.name}"
                                     th:value="${category.id}"
                                     th:selected="${product.category?.id == category.id}"></option>
                         </select>
@@ -56,7 +57,7 @@
 
                         <select class="form-control" id="brands" name="brand" required>
                             <option th:each="brand : ${brands}"
-                                    th:text="${brand.brandname}"
+                                    th:text="${brand.name}"
                                     th:value="${brand.id}"
                                     th:selected="${product.brand?.id == brand.id}"></option>
                         </select>
