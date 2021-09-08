@@ -1,9 +1,11 @@
-package ru.geekbrains.persist;
+package ru.geekbrains.persist.model;
+
+import ru.geekbrains.persist.model.Category;
 
 import javax.persistence.*;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
+
 
 @Entity
 @Table(name = "products")
@@ -13,27 +15,33 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-@NotBlank
+//@NotBlank
 @Column(nullable = false)
     private  String name;
-@Min(0L)
+//@Min(0L)
 @Column(nullable = false)
     private Float price;
 
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    private List<Picture> pictures = new ArrayList<>();
 
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
 
+    @ManyToOne
+    @JoinColumn(name = "brand_id")
+    private Brand brand;
     public Product(){
 
     }
 
-    public Product(Long id, String name, Float price, Category category) {
+    public Product(Long id, String name, Float price, Category category, Brand brand) {
         this.id = id;
         this.name = name;
         this.price = price;
         this.category = category;
+        this.brand = brand;
     }
 
     public Long getId() {
@@ -62,4 +70,17 @@ public class Product {
 
     public void setCategory(Category category) {
         this.category = category;}
+    public Brand  getBrand() {
+        return  brand;
+    }
+
+    public void setBrand(Brand brand) {
+        this.brand = brand;}
+    public List<Picture> getPictures() {
+        return pictures;
+    }
+
+    public void setPictures(List<Picture> pictures) {
+        this.pictures = pictures;
+    }
 }

@@ -22,7 +22,7 @@
 <div class="container">
     <div class="row py-2">
         <div sec:authorize="hasRole('ADMIN')"  class="col-12">
-            <a class="btn btn-primary" th:href="@{/category/new}">Add Category</a>
+            <a class="btn btn-primary" th:href="@{/brand/new}">Add Brand</a>
         </div>
 
 
@@ -32,24 +32,24 @@
                 <thead>
                 <tr>
                     <th scope="col">Id</th>
-                    <th scope="col">Category</th>
+                    <th scope="col">Brand</th>
                     <th scope="col">Actions</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:if="${!categories.isEmpty()}" th:each="category : ${categories}">
-                    <th scope="row" th:text="${category.id}">1</th>
-                    <td th:text="${category.name}">Food</td>
+                <tr th:if="${!brands.isEmpty()}" th:each="brand : ${brands}">
+                    <th scope="row" th:text="${brand.id}">1</th>
+                    <td th:text="${brand.name}">Food</td>
 
                     <form sec:authorize="hasRole('ADMIN')" > <td>
-                        <a class="btn btn-success" th:href="@{/category/{id}(id = ${category.id})}"><i class="fas fa-edit"></i></a>
-                        <form class="d-inline" th:method="delete" th:action="@{/category/{id}(id = ${category.id})}">
+                        <a class="btn btn-success" th:href="@{/brand/{id}(id = ${brand.id})}"><i class="fas fa-edit"></i></a>
+                        <form class="d-inline" th:method="delete" th:action="@{/brand/{id}(id = ${brand.id})}">
                             <button type="submit" class="btn btn-danger"><i class="far fa-trash-alt"></i></button>
                         </form>
                     </td> </form>
                 </tr>
 
-                <tr th:if="${categories.isEmpty()}">
+                <tr th:if="${brands.isEmpty()}">
                     <td colspan="4">No data</td>
                 </tr>
 

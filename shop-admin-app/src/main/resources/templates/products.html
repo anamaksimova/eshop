@@ -59,6 +59,7 @@
                     <th scope="col" th:replace="fragments/sort_header :: sort_header ('Product', 'name')"></th>
                     <th scope="col" th:replace="fragments/sort_header :: sort_header ('Price', 'price')"></th>
                     <th scope="col">Category</th>
+                    <th scope="col">Brand</th>
                     <th scope="col">Actions</th>
                 </tr>
                 </thead>
@@ -67,13 +68,15 @@
                     <th scope="row" th:text="${product.id}">1</th>
                     <td th:text="${product.name}">prod</td>
                     <td th:text="${product.price}">price</td>
-                    <td th:text="${product.category.getCategoryname}">category</td>
+                    <td th:text="${product.category.getName}">category</td>
+                    <td th:text="${product.brand.getName}">brand</td>
                     <td>
                         <a class="btn btn-success" th:href="@{/product/{id}(id = ${product.id})}"><i class="fas fa-edit"></i></a>
                         <form class="d-inline" th:method="delete" th:action="@{/product/{id}(id = ${product.id})}">
                             <button type="submit" class="btn btn-danger"><i class="far fa-trash-alt"></i></button>
                         </form>
                     </td>
+
                 </tr>
                 <tr th:unless="${products.hasContent()}">
                     <td colspan="4">No data</td>

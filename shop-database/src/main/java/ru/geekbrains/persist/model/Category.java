@@ -1,10 +1,8 @@
-package ru.geekbrains.persist;
+package ru.geekbrains.persist.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
 import java.util.List;
 
 @Entity
@@ -18,7 +16,7 @@ public class Category {
 
 
     @Column(name = "categoryname", unique = true, nullable = false)
-    private String categoryname;
+    private String name;
 
     @JsonIgnore
     @OneToMany(mappedBy = "category")
@@ -28,9 +26,9 @@ public class Category {
 
     }
 
-    public Category(Long id, String categoryname) {
+    public Category(Long id, String name) {
         this.id = id;
-        this.categoryname = categoryname;
+        this.name = name;
 
     }
 
@@ -38,8 +36,8 @@ public class Category {
         return id;
     }
 
-    public String getCategoryname() {
-        return categoryname;
+    public String getName() {
+        return name;
     }
 
 
@@ -47,8 +45,8 @@ public class Category {
         this.id = id;
     }
 
-    public void setCategoryname(String categoryname) {
-        this.categoryname = categoryname;
+    public void setName(String name) {
+        this.name = name;
     }
     public List<Product> getProducts() {
         return products;
