@@ -41,12 +41,12 @@
                     <th scope="row" th:text="${brand.id}">1</th>
                     <td th:text="${brand.name}">Food</td>
 
-                    <form sec:authorize="hasRole('ADMIN')" > <td>
+                   <td>
                         <a class="btn btn-success" th:href="@{/brand/{id}(id = ${brand.id})}"><i class="fas fa-edit"></i></a>
                         <form class="d-inline" th:method="delete" th:action="@{/brand/{id}(id = ${brand.id})}">
                             <button type="submit" class="btn btn-danger"><i class="far fa-trash-alt"></i></button>
                         </form>
-                    </td> </form>
+                    </td>
                 </tr>
 
                 <tr th:if="${brands.isEmpty()}">

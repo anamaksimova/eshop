@@ -13,6 +13,7 @@ import ru.geekbrains.persist.model.Category;
 import ru.geekbrains.service.CategoryService;
 
 import javax.validation.Valid;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/category")
@@ -27,11 +28,14 @@ public class CategoryController {
     }
 
     @GetMapping
-    public String listPage(Model model){
-        logger.info("Category list page requested");
+    public String listPage(@RequestParam("page") Optional<Integer> page,
+                           @RequestParam("size") Optional<Integer> size,
+                           @RequestParam("sortField") Optional<String> sortField, Model model) {
 
 
-        model.addAttribute("categories", categoryService.findAll());
+        model.addAttribute("categories", categoryService.findAll( page.orElse(1) - 1,
+                size.orElse(5),
+                sortField.filter(fld -> !fld.isBlank()).orElse("id")));
         return "categories";
     }
 
@@ -39,7 +43,7 @@ public class CategoryController {
     public String newCategoryForm(Model model) {
         logger.info("New Category page requested");
 
-        model.addAttribute("category", new Category());
+        model.addAttribute("category", new CategoryDto());
         return "category_form";
     }
 

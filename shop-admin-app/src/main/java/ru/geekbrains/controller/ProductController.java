@@ -15,6 +15,7 @@ import ru.geekbrains.service.CategoryService;
 import ru.geekbrains.service.ProductService;
 
 import javax.validation.Valid;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/product")
@@ -32,12 +33,19 @@ public class ProductController {
     }
 
     @GetMapping
-    public String listPage(Model model,
-                         ProductListParams productListParams){
-        logger.info("Product list page requested");
-
-
-        model.addAttribute("products", productService.findWithFilter(productListParams));
+    public String listPage( @RequestParam("categoryId") Optional<Long> categoryId,
+                            @RequestParam("namePattern") Optional<String> namePattern,
+                            @RequestParam("page") Optional<Integer> page,
+                            @RequestParam("size") Optional<Integer> size,
+                            @RequestParam("sortField") Optional<String> sortField, Model model) {
+        model.addAttribute("categories", categoryService.findAll());
+        model.addAttribute("brands", brandService.findAll());
+        model.addAttribute("products", productService.findAll(
+                categoryId,
+                namePattern,
+                page.orElse(1) - 1,
+                size.orElse(5),
+                sortField.filter(fld -> !fld.isBlank()).orElse("id")));
         return "products";
     }
 
@@ -82,17 +90,18 @@ public class ProductController {
     public String update(@Valid @ModelAttribute("product") ProductDto product, BindingResult result, Model model) {
         logger.info("Saving product");
 
-        if (result.hasErrors()&&product.getId()==null) {
-            logger.error(result.getAllErrors().toString());
-            model.addAttribute("categories", categoryService.findAll());
-            model.addAttribute("brands", brandService.findAll());
-            return "product_form";
-        } else if (result.hasErrors()&&product.getId()!= null) {
+        if (result.hasErrors()) {
             logger.error(result.getAllErrors().toString());
             model.addAttribute("categories", categoryService.findAll());
             model.addAttribute("brands", brandService.findAll());
             return "product_edit";
         }
+//        else if (result.hasErrors()&&product.getId()!= null) {
+//            logger.error(result.getAllErrors().toString());
+//            model.addAttribute("categories", categoryService.findAll());
+//            model.addAttribute("brands", brandService.findAll());
+//            return "product_edit";
+//        }
         productService.save(product);
         return "redirect:/product";
     }

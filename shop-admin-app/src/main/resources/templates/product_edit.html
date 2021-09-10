@@ -58,8 +58,8 @@
                         <select class="form-control" id="brands" name="brand" required>
                             <option th:each="brand : ${brands}"
                                     th:text="${brand.name}"
-                                    th:value="${brand.id}"
-                                    th:selected="${product.brand?.id == brand.id}"></option>
+                                    th:value="${brand.id} + ';' + ${brand.name}"
+                                    th:selected="${product.brands?.contains(brand)}"></option>
                         </select>
                     </div>  </td>
                     <td>
@@ -72,6 +72,17 @@
                 </tr>
                 </tbody>
             </table>
+        </div>
+        <div class="container-fluid mt-4">
+            <div class="card-columns" style="column-count: 5">
+                <div class="card" th:each="picId : ${product.pictures}">
+                    <form class="card-header" th:method="delete" th:action="@{/picture/{pictureId}(pictureId=${picId})}" >
+                        Picture<button class="float-right"><i class="fa fa-times"></i></button>
+                    </form>
+                    <img class="card-img-bottom" th:src="@{/picture/{pictureId}(pictureId=${picId})}"
+                         width="40%"/>
+                </div>
+            </div>
         </div>
     </div>
 </div>

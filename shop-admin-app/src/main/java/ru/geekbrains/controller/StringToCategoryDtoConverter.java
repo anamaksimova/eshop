@@ -6,9 +6,13 @@ import org.springframework.stereotype.Component;
 @Component
 public class StringToCategoryDtoConverter implements Converter<String, CategoryDto> {
 
-    @Override
-    public CategoryDto convert(String s) {
-        String[] arr = s.split(";");
-        return new CategoryDto(Long.parseLong(arr[0]), arr[1]);
-    }
+//    @Override
+//    public CategoryDto convert(String s) {
+//        String[] arr = s.split(";");
+//        return new CategoryDto(Long.parseLong(arr[0]), arr[1]);
+//    }
+@Override
+public CategoryDto convert(String id) {
+    return new CategoryDto(Long.parseLong(id));
+}
 }

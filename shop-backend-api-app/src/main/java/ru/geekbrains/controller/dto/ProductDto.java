@@ -14,18 +14,20 @@ public class ProductDto {
     private Float price;
 
     private CategoryDto category;
+    private BrandDto brand;
 
     private List<Long> pictures;
 
     public ProductDto() {
     }
 
-    public ProductDto(Long id, String name, Float price, CategoryDto category, List<Long> pictures) {
+    public ProductDto(Long id, String name, Float price, CategoryDto category, BrandDto brand, List<Long> pictures) {
         this.id = id;
         this.name = name;
 
         this.price = price;
         this.category = category;
+        this.brand = brand;
         this.pictures = pictures;
     }
 
@@ -61,6 +63,13 @@ public class ProductDto {
 
     public void setCategory(CategoryDto category) {
         this.category = category;
+    }
+    public BrandDto getBrand() {
+        return brand;
+    }
+
+    public void setBrand(BrandDto brand) {
+        this.brand = brand;
     }
 
     public List<Long> getPictures() {

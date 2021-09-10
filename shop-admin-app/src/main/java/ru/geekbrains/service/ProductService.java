@@ -10,8 +10,9 @@ import java.util.Optional;
 public interface ProductService {
 //    List<Product> findAll();
 
-    Page<Product> findWithFilter(ProductListParams productListParams);
-Page<ProductDto> findAll(Integer page, Integer size, String sortField);
+   // Page<Product> findWithFilter(ProductListParams productListParams);
+    Page<ProductDto> findAll(Optional<Long> categoryId, Optional<String> namePattern,
+                             Integer page, Integer size, String sortField);
     Optional<ProductDto> findById(Long id);
 
     void save(ProductDto product);
