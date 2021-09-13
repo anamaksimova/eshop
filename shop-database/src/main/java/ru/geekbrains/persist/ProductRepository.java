@@ -3,6 +3,7 @@ package ru.geekbrains.persist;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
@@ -26,7 +27,7 @@ public interface ProductRepository extends JpaRepository <Product,Long>, JpaSpec
 //                           @Param("minPrice") Float minPrice,
 //                           @Param("maxPrice") Float maxPrice);
 //
-
+@EntityGraph("product-with-category")
     Page<Product> findAll(@Nullable Specification<Product> spec, Pageable pageable);
     List<Product> findProductByNameLike(String name);
     List<Product> findByPriceBetween(Float min, Float max);

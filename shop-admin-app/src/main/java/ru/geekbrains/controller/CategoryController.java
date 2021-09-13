@@ -56,7 +56,7 @@ public class CategoryController {
     }
 
     @PostMapping
-    public String update(@Valid CategoryDto category, BindingResult result) {
+    public String update(@Valid @ModelAttribute("category") CategoryDto category, BindingResult result) {
         logger.info("Saving category");
         if (result.hasErrors()) {
             return "category_form";

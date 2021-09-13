@@ -31,6 +31,7 @@
                     <th scope="col">Price</th>
                     <th scope="col">Category</th>
                     <th scope="col">Brand</th>
+                    <th scope="col">Product image</th>
                     <th scope="col">Actions</th>
                 </tr>
                 </thead>
@@ -62,6 +63,13 @@
                                     th:selected="${product.brands?.contains(brand)}"></option>
                         </select>
                     </div>  </td>
+
+                    <td >  <div class="form-group">
+
+                        <input th:field="*{newPictures}" type="file" class="form-control" id="newPictures"
+                               placeholder="Upload picture" multiple>
+                    </div></td>
+
                     <td>
                         <input type="hidden" id="id" th:field="*{id}">
 
@@ -73,6 +81,8 @@
                 </tbody>
             </table>
         </div>
+
+
         <div class="container-fluid mt-4">
             <div class="card-columns" style="column-count: 5">
                 <div class="card" th:each="picId : ${product.pictures}">
