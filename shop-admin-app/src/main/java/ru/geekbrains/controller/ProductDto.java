@@ -2,6 +2,7 @@ package ru.geekbrains.controller;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Set;
 
@@ -11,7 +12,7 @@ public class ProductDto {
 
     private String name;
 
-    private Float price;
+    private BigDecimal price;
 
     private CategoryDto category;
     private BrandDto brand;
@@ -24,7 +25,7 @@ public class ProductDto {
     public ProductDto() {
     }
 
-    public ProductDto(Long id, String name,  Float price, CategoryDto category,BrandDto brand,List<Long> pictures) {
+    public ProductDto(Long id, String name,  BigDecimal price, CategoryDto category,BrandDto brand,List<Long> pictures) {
         this.id = id;
         this.name = name;
         this.price = price;
@@ -51,11 +52,11 @@ public class ProductDto {
 
 
 
-    public Float getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(Float price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
     public BrandDto getBrand() {

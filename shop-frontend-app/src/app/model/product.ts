@@ -8,6 +8,7 @@ export class Product {
               public price: number,
               public category: Category,
               public brand: Brand,
-              public pictures: number[]) {
+              public pictures: number[],
+              public mainPictureId: number) {
   }
 }

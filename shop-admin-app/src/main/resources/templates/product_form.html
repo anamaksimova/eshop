@@ -38,8 +38,8 @@
                     <select class="form-control" id="categories" name="category" required>
                         <option th:each="category : ${categories}"
                                 th:text="${category.name}"
-                                th:value="${category.id} + ';' + ${category.name}"
-                                th:selected="${product.categories?.contains(category)}"></option>
+                                th:value="${category.id}"
+                                th:selected="${product.category?.id == category.id}"></option>
                     </select>
                 </div>
                 <div class="form-group">
@@ -59,6 +59,9 @@
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>
         </div>
+
+
+
     </div>
 </div>
 

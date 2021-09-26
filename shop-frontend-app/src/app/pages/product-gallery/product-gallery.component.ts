@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {ProductService} from "../../services/product.service";
+import {AddLineItemDto} from "../../model/add-line-item-dto";
 import {Product} from "../../model/product";
+import {CartService} from "../../services/cart.service";
+import {ProductService} from "../../services/product.service";
 export const PRODUCT_GALLERY_URL = 'product';
 @Component({
   selector: 'app-product-gallery',
@@ -10,12 +12,11 @@ export const PRODUCT_GALLERY_URL = 'product';
 export class ProductGalleryComponent implements OnInit {
   products: Product[] = [];
   isError: boolean = false;
-  constructor(private productService: ProductService) { }
-
-  ngOnInit(): void {
-    this.retrieveProducts();
+  constructor(private cartService: CartService,private productService: ProductService) {
   }
 
+  ngOnInit(): void { this.retrieveProducts();
+  }
   private retrieveProducts() {
     this.productService.findAll()
       .then(res => {
@@ -25,5 +26,9 @@ export class ProductGalleryComponent implements OnInit {
         console.error(err);
         this.isError = true;
       })
+  }
+  addToCart(id: number) {
+    this.cartService.addToCart(new AddLineItemDto(id, 1))
+      .subscribe();
   }
 }

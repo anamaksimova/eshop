@@ -11,6 +11,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.lang.Nullable;
 import ru.geekbrains.persist.model.Product;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public interface ProductRepository extends JpaRepository <Product,Long>, JpaSpecificationExecutor<Product> {
@@ -30,5 +31,5 @@ public interface ProductRepository extends JpaRepository <Product,Long>, JpaSpec
 @EntityGraph("product-with-category")
     Page<Product> findAll(@Nullable Specification<Product> spec, Pageable pageable);
     List<Product> findProductByNameLike(String name);
-    List<Product> findByPriceBetween(Float min, Float max);
+    List<Product> findByPriceBetween(BigDecimal min, BigDecimal max);
 }

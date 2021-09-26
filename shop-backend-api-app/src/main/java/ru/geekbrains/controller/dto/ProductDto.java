@@ -11,17 +11,17 @@ public class ProductDto {
 
 
 
-    private Float price;
+    private BigDecimal price;
 
     private CategoryDto category;
     private BrandDto brand;
 
     private List<Long> pictures;
-
+    private Long mainPictureId;
     public ProductDto() {
     }
 
-    public ProductDto(Long id, String name, Float price, CategoryDto category, BrandDto brand, List<Long> pictures) {
+    public ProductDto(Long id, String name, BigDecimal price, CategoryDto category, BrandDto brand, List<Long> pictures) {
         this.id = id;
         this.name = name;
 
@@ -29,6 +29,9 @@ public class ProductDto {
         this.category = category;
         this.brand = brand;
         this.pictures = pictures;
+        if (pictures != null && !pictures.isEmpty()) {
+            this.mainPictureId = pictures.get(0);
+        }
     }
 
     public Long getId() {
@@ -49,11 +52,11 @@ public class ProductDto {
 
 
 
-    public Float getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(Float price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 
@@ -78,5 +81,12 @@ public class ProductDto {
 
     public void setPictures(List<Long> pictures) {
         this.pictures = pictures;
+    }
+    public Long getMainPictureId() {
+        return mainPictureId;
+    }
+
+    public void setMainPictureId(Long mainPictureId) {
+        this.mainPictureId = mainPictureId;
     }
 }

@@ -1,11 +1,13 @@
 package ru.geekbrains.controller;
 
+import java.math.BigDecimal;
+
 public class ProductListParams {
     private String nameFilter;
 
-    private Float minPrice;
+    private BigDecimal minPrice;
 
-    private Float maxPrice;
+    private BigDecimal maxPrice;
 
     private Integer page;
 
@@ -34,19 +36,19 @@ public class ProductListParams {
         this.nameFilter = nameFilter;
     }
 
-    public Float getMinPrice() {
+    public BigDecimal getMinPrice() {
         return minPrice;
     }
 
-    public void setMinPrice(Float minPrice) {
+    public void setMinPrice(BigDecimal minPrice) {
         this.minPrice = minPrice;
     }
 
-    public Float getMaxPrice() {
+    public BigDecimal getMaxPrice() {
         return maxPrice;
     }
 
-    public void setMaxPrice(Float maxPrice) {
+    public void setMaxPrice(BigDecimal maxPrice) {
         this.maxPrice = maxPrice;
     }
 

@@ -3,6 +3,7 @@ package ru.geekbrains.persist.model;
 import ru.geekbrains.persist.model.Category;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -27,7 +28,7 @@ public class Product {
     private  String name;
 //@Min(0L)
 @Column(nullable = false)
-    private Float price;
+    private BigDecimal price;
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private List<Picture> pictures = new ArrayList<>();
@@ -43,7 +44,7 @@ public class Product {
 
     }
 
-    public Product(Long id, String name, Float price, Category category, Brand brand) {
+    public Product(Long id, String name, BigDecimal price, Category category, Brand brand) {
         this.id = id;
         this.name = name;
         this.price = price;
@@ -58,14 +59,14 @@ public class Product {
     public String getName() {
         return name;
     }
-    public Float getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
     public void setId(Long id) {
         this.id = id;
     }
-    public void setPrice(Float price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
     public void setName(String name) {
