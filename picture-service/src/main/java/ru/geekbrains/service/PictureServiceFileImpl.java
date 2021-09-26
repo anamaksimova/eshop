@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.geekbrains.persist.PictureRepository;
 import ru.geekbrains.persist.model.Picture;
 
@@ -56,11 +57,35 @@ public class PictureServiceFileImpl implements PictureService {
     public String createPicture(byte[] picture) {
         String fileName = UUID.randomUUID().toString();
         try (OutputStream os = Files.newOutputStream(Paths.get(storagePath, fileName))) {
-            os.write(picture);
+           if (!picture.equals(null)){ os.write(picture);}
         } catch (IOException ex) {
             logger.error("Can't write file", ex);
             throw new RuntimeException(ex);
         }
         return fileName;
     }
-}
+
+    @Override
+    @Transactional
+    public void deletePictureDataById(Long id) {
+        pictureRepository.findById(id)
+                .map(pic -> Paths.get(storagePath, pic.getStorageUUId()))
+                .filter(Files::exists)
+                .map(path -> {
+
+                    try {
+                        Files.delete(path);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    pictureRepository.deleteById(id);
+                    return null;
+                });
+    }
+    }
+
+
+
+
+
+

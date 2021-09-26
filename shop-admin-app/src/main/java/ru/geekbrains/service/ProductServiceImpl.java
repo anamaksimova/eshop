@@ -10,15 +10,18 @@ import org.springframework.web.multipart.MultipartFile;
 import ru.geekbrains.controller.*;
 import ru.geekbrains.persist.BrandRepository;
 import ru.geekbrains.persist.CategoryRepository;
+import ru.geekbrains.persist.ProductSpecification;
+import ru.geekbrains.persist.model.Brand;
 import ru.geekbrains.persist.model.Category;
 import ru.geekbrains.persist.model.Picture;
 import ru.geekbrains.persist.model.Product;
 import ru.geekbrains.persist.ProductRepository;
-import ru.geekbrains.persist.ProductSpecifications;
+import ru.geekbrains.persist.ProductSpecification;
 
 import javax.transaction.Transactional;
 import java.io.IOException;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -39,40 +42,53 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Page<ProductDto> findAll(Integer page, Integer size, String sortField) {
-        return productRepository.findAll(PageRequest.of(page, size, Sort.by(sortField)))
+    public Page<ProductDto> findAll(Optional<Long> categoryId, Optional<String> namePattern,
+                                    Integer page, Integer size, String sortField) {
+        Specification<Product> spec = Specification.where(null);
+
+        if (categoryId.isPresent() && categoryId.get() != -1) {
+            spec = spec.and(ProductSpecification.byCategory(categoryId.get()));
+        }
+        if (namePattern.isPresent()) {
+            spec = spec.and(ProductSpecification.byName(namePattern.get()));
+        }
+
+        return productRepository.findAll(spec, PageRequest.of(page, size, Sort.by(sortField)))
                 .map(product -> new ProductDto(product.getId(),
                         product.getName(),
                         product.getPrice(),
                         new CategoryDto(product.getCategory().getId(), product.getCategory().getName()),
-                         new BrandDto(product.getBrand().getId(), product.getBrand().getName())));
+                         new BrandDto(product.getBrand().getId(), product.getBrand().getName()),
+                        product.getPictures().stream()
+                                .map(Picture::getId)
+                                .collect(Collectors.toList())));
     }
 
-    @Override
-    public Page<Product> findWithFilter(ProductListParams productListParams) {
-        Specification<Product> spec = Specification.where(null);
-
-        if (productListParams.getNameFilter() != null && !productListParams.getNameFilter().isBlank()) {
-            spec = spec.and(ProductSpecifications.namePrefix(productListParams.getNameFilter()));
-        }
-        if (productListParams.getMinPrice() != null) {
-            spec = spec.and(ProductSpecifications.minPrice(productListParams.getMinPrice()));
-        }
-        if (productListParams.getMaxPrice() != null ) {
-            spec = spec.and(ProductSpecifications.maxPrice(productListParams.getMaxPrice()));
-        }
-        if (productListParams.getCategoryNameFilter() != null && !productListParams.getCategoryNameFilter().isBlank()) {
-            spec = spec.and(ProductSpecifications.namePrefix(productListParams.getCategoryNameFilter()));
-        }
-
-        return productRepository.findAll(spec,
-                PageRequest.of(
-                        Optional.ofNullable(productListParams.getPage()).orElse(1) - 1,
-                        Optional.ofNullable(productListParams.getSize()).orElse(3),
-                        Sort.by(Optional.ofNullable(productListParams.getSortField())
-                                .filter(c -> !c.isBlank())
-                                .orElse("id"))));
-    }
+//    @Override
+//    public Page<Product> findWithFilter(ProductListParams productListParams) {
+//        Specification<Product> spec = Specification.where(null);
+//
+//        if (productListParams.getNameFilter() != null && !productListParams.getNameFilter().isBlank()) {
+//            spec = spec.and(ProductSpecifications.namePrefix(productListParams.getNameFilter()));
+//        }
+//        if (productListParams.getMinPrice() != null) {
+//            spec = spec.and(ProductSpecifications.minPrice(productListParams.getMinPrice()));
+//        }
+//        if (productListParams.getMaxPrice() != null ) {
+//            spec = spec.and(ProductSpecifications.maxPrice(productListParams.getMaxPrice()));
+//        }
+//        if (productListParams.getCategoryNameFilter() != null && !productListParams.getCategoryNameFilter().isBlank()) {
+//            spec = spec.and(ProductSpecifications.namePrefix(productListParams.getCategoryNameFilter()));
+//        }
+//
+//        return productRepository.findAll(spec,
+//                PageRequest.of(
+//                        Optional.ofNullable(productListParams.getPage()).orElse(1) - 1,
+//                        Optional.ofNullable(productListParams.getSize()).orElse(3),
+//                        Sort.by(Optional.ofNullable(productListParams.getSortField())
+//                                .filter(c -> !c.isBlank())
+//                                .orElse("id"))));
+//    }
 
     @Override
     public Optional<ProductDto> findById(Long id) {
@@ -81,7 +97,10 @@ public class ProductServiceImpl implements ProductService {
                         product.getName(),
                         product.getPrice(),
                         new CategoryDto(product.getCategory().getId(), product.getCategory().getName()),
-        new BrandDto(product.getBrand().getId(), product.getBrand().getName())));
+        new BrandDto(product.getBrand().getId(), product.getBrand().getName()),
+                        product.getPictures().stream()
+                                .map(Picture::getId)
+                                .collect(Collectors.toList())));
     }
 
     @Override
@@ -91,9 +110,12 @@ public class ProductServiceImpl implements ProductService {
                 .orElseThrow(() -> new NotFoundException("")) : new Product();
         Category category = categoryRepository.findById(productDto.getCategory().getId())
                 .orElseThrow(() -> new RuntimeException("Category not found"));
+        Brand brand = brandRepository.findById(productDto.getBrand().getId())
+                .orElseThrow(() -> new RuntimeException("Brand not found"));
 
         product.setName(productDto.getName());
         product.setCategory(category);
+        product.setBrand(brand);
         product.setPrice(productDto.getPrice());
 
 

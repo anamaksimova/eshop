@@ -24,12 +24,13 @@ public class ProductDto {
     public ProductDto() {
     }
 
-    public ProductDto(Long id, String name,  Float price, CategoryDto category,BrandDto brand) {
+    public ProductDto(Long id, String name,  Float price, CategoryDto category,BrandDto brand,List<Long> pictures) {
         this.id = id;
         this.name = name;
         this.price = price;
         this.category = category;
         this.brand = brand;
+        this.pictures = pictures;
     }
 
     public Long getId() {
@@ -102,4 +103,5 @@ public class ProductDto {
     public void setBrands(Set<BrandDto> brands) {
         this.brands = brands;
     }
+
 }

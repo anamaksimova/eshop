@@ -1,11 +1,21 @@
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org">
 
-<th scope="col" th:fragment="sort_header (header, column)">[[${header}]]
-    <a th:href="@{/product(page=${param.page}, size=${products.size}, nameFilter=${param.nameFilter},
-                               minPrice=${param.minPrice}, maxPrice=${param.maxPrice}, sortField=${column})}">
-        <i class="fa fa-sort-down" ></i>
+<!--<th scope="col" th:fragment="sort_header (header, column)">[[${header}]]-->
+<!--    <a th:href="@{/product(page=${param.page}, size=${products.size}, nameFilter=${param.nameFilter},-->
+<!--                               minPrice=${param.minPrice}, maxPrice=${param.maxPrice}, sortField=${column})}">-->
+<!--        <i class="fa fa-sort-down" ></i>-->
+<!--    </a>-->
+<!--</th>-->
+<th scope="col" th:fragment="sort_header_product (header, column)">[[${header}]]
+    <a th:href="@{/product(categoryId=${param.categoryId}, namePattern=${param.namePattern}, page=${param.page}, size=${param.size}, sortField=${column})}">
+        <i class="fa fa-sort-down"></i>
     </a>
 </th>
 
+<th scope="col" th:fragment="sort_header_category (header, column)">[[${header}]]
+    <a th:href="@{/category(page=${param.page}, size=${param.size}, sortField=${column})}">
+        <i class="fa fa-sort-down"></i>
+    </a>
+</th>
 </html>
