@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {NavigationEnd, Router} from "@angular/router";
 import {CART_URL} from "../../pages/cart-page/cart-page.component";
-import {PRODUCT_GALLERY_URL} from "../../pages/product-gallery/product-gallery.component";
+import {PRODUCT_GALLERY_URL} from "../../pages/product-gallery-page/product-gallery-page.component";
 
 @Component({
   selector: 'app-nav-bar',

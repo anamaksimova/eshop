@@ -40,7 +40,13 @@ public class CartController {
         return cartService.getLineItems();
     }
 
+    @DeleteMapping(produces = "application/json", consumes = "application/json")
+    public void deleteLineItem(@RequestBody LineItem lineItem) {
+        logger.info("Deleting product with id {}", lineItem.getProductId());
 
+        cartService.removeProduct(lineItem.getProductDto());
+
+    }
 
     @GetMapping("/all")
     public AllCartDto findAll() {
