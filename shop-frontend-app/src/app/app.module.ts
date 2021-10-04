@@ -9,13 +9,17 @@ import {
 
   ProductGalleryPageComponent
 } from './pages/product-gallery-page/product-gallery-page.component';
-import {HttpClientModule} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClientModule, HttpClientXsrfModule} from "@angular/common/http";
 import {FormsModule} from "@angular/forms";
 import { CartPageComponent } from './pages/cart-page/cart-page.component';
 import { ProductFilterComponent } from './components/product-filter/product-filter.component';
 import { CartItemComponent } from './components/cart-item/cart-item.component';
 import { PaginationComponent } from './components/pagination/pagination.component';
 import {ProductGalleryComponent} from "./components/product-gallery/product-gallery.component";
+import { LoginPageComponent } from './pages/login-page/login-page.component';
+import { OrderPageComponent } from './pages/order-page/order-page.component';
+import { RegisterPageComponent } from './pages/register-page/register-page.component';
+import {UnauthorizedInterceptor} from "./helpers/unauthorized-interceptor";
 
 @NgModule({
   declarations: [
@@ -27,15 +31,20 @@ import {ProductGalleryComponent} from "./components/product-gallery/product-gall
     CartPageComponent,
     ProductFilterComponent,
     CartItemComponent,
-    PaginationComponent
+    PaginationComponent,
+    LoginPageComponent,
+    OrderPageComponent,
+    RegisterPageComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    HttpClientXsrfModule.withOptions({cookieName: 'XSRF-TOKEN'})
   ],
-  providers: [],
+  providers: [   { provide: HTTP_INTERCEPTORS, useClass: UnauthorizedInterceptor, multi: true }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
