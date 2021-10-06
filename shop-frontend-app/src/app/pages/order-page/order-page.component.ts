@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import {Order} from "../../model/order";
+import {Component, OnInit} from '@angular/core';
 import {OrderService} from "../../services/order.service";
+import {Order} from "../../model/order";
 
 export const ORDERS_URL = 'order';
 
@@ -17,7 +17,7 @@ export class OrderPageComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.orderService.findOrdersByUser(1)
+    this.orderService.findOrdersByCurrentUser()
       .subscribe(orders => {
           this.orders = orders;
         },
