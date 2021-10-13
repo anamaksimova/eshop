@@ -33,6 +33,7 @@
         <module>spring-cloud-config</module>
         <module>spring-cloud-gateway</module>
         <module>picture-service-app</module>
+        <module>shop-delivery-service</module>
     </modules>
     <dependencyManagement>
         <dependencies>
