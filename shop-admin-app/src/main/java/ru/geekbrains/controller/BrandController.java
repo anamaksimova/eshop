@@ -54,7 +54,7 @@ public class BrandController {
     }
 
     @PostMapping
-    public String update(@Valid Brand brand, BindingResult result) {
+    public String update(@Valid BrandDto brand, BindingResult result) {
         logger.info("Saving brand");
         if (result.hasErrors()) {
             return "brand_form";
