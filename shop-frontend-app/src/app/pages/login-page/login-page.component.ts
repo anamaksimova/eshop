@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import {AuthService} from "../../services/auth.service";
 import {Credentials} from "../../model/credentials";
 import {Router} from "@angular/router";
 import {PRODUCT_GALLERY_URL} from "../product-gallery-page/product-gallery-page.component";
-import {AuthService} from "../../services/auth.service";
 
 export const LOGIN_URL = 'login'
 
@@ -26,6 +26,9 @@ export class LoginPageComponent implements OnInit {
     this.auth.authenticate(this.credentials)
       .subscribe(authResult => {
         this.isError = false;
+        if (authResult.callbackAfterSuccess) {
+          authResult.callbackAfterSuccess();
+        }
         if (authResult.redirectUrl) {
           this.router.navigateByUrl(authResult.redirectUrl);
         } else {

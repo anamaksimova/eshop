@@ -13,18 +13,10 @@
       </thead>
       <tbody>
 
-      <tr app-cart-item
-          *ngFor="let lineItem of content?.lineItems">
-      <th scope="row">#</th>
-      <td>{{lineItem.productDto.name}} </td>
-        <td>
-          <input type="number" value="{{lineItem.qty}}" class="form-control w-25"/>
-        </td>
-        <td>{{lineItem.itemTotal}} </td>
-        <td>
-        <a class="btn btn-success me-2" href="#"><i class="fas fa-check-circle"></i> </a>
-          <a class="btn btn-danger" href="#"><i class="far fa-trash-alt"></i> </a>
-        </td>
+      <tr >
+        <app-cart-item *ngFor="let lineItem of content?.lineItems"
+          [lineItem]="lineItem"
+          (updated)="cartUpdated()"></app-cart-item>
       </tr>
 
       </tbody>
@@ -37,7 +29,7 @@
       <div class="card-body">
         <h2>Order summary</h2>
         <p>Subtotal: {{content?.subtotal}}</p>
-        <button class="btn btn-primary me-2">Create Order</button>
+        <button class="btn btn-primary me-2" (click)="createOrder()">Create Order</button>
       </div>
     </div>
   </div>
