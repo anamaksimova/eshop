@@ -43,7 +43,10 @@ public class OrderServiceImpl implements OrderService {
     public OrderServiceImpl(OrderRepository orderRepository,
                             CartService cartService,
                             UserRepository userRepository,
-                            ProductRepository productRepository, RabbitTemplate rabbitTemplate, SimpMessagingTemplate template) {
+                            ProductRepository productRepository,
+                            RabbitTemplate rabbitTemplate,
+                            SimpMessagingTemplate template
+    ) {
         this.orderRepository = orderRepository;
         this.cartService = cartService;
         this.userRepository = userRepository;

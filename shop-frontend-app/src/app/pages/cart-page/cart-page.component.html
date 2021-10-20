@@ -12,7 +12,11 @@
       </tr>
       </thead>
       <tbody>
-
+<!--      <tr app-cart-item-->
+<!--          *ngFor="let lineItem of content?.lineItems"-->
+<!--          [lineItem]="lineItem"-->
+<!--          (updated)="cartUpdated()">-->
+<!--      </tr>-->
       <tr >
         <app-cart-item *ngFor="let lineItem of content?.lineItems"
           [lineItem]="lineItem"
