@@ -27,7 +27,13 @@ export class OrderPageComponent implements OnInit {
           console.log(error);
         });
     this.orderStatusService.onMessage('/order_out/order')
-      .subscribe(msg => console.log(`New message with status ${msg.state}`));
+      .subscribe(msg => {console.log(`New message with status ${msg.state}`);
+
+    let updated = this.orders.find(order => order.id === msg.id);
+    if (updated) {
+      updated.status = msg.state;
+    }
+  });
   }
 
 }

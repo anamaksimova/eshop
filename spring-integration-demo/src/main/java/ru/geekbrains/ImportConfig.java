@@ -18,6 +18,7 @@ import org.springframework.integration.jpa.dsl.Jpa;
 import org.springframework.integration.jpa.dsl.JpaUpdatingOutboundEndpointSpec;
 import org.springframework.integration.jpa.support.PersistMode;
 import org.springframework.messaging.MessageHandler;
+import ru.geekbrains.persist.model.Category;
 
 import javax.persistence.EntityManagerFactory;
 import java.io.File;
@@ -66,9 +67,12 @@ public class ImportConfig {
                 .transform(new FileToStringTransformer())
                 //.<String, String>transform(String::toUpperCase)
                 .split(s -> s.delimiters("\n"))
-                .<String, Object>transform(str -> {
+                .<String, Category>transform(str -> {
                     logger.info("New str {}", str);
-                    return new Object(); // TODO написать преобразование строки из файла в сущность
+                    String[] data = str.split(",");
+                    Category category = new Category();
+                    category.setName(data[1]);
+                    return category;
                 })
                 //.handle(destDirectory())
                 .handle(jpaPersistHandler(), ConsumerEndpointSpec::transactional)
