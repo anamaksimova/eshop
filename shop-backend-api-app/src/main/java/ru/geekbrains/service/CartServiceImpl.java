@@ -39,7 +39,8 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public void removeProductQty(ProductDto productDto,  int qty) {
-
+        LineItem lineItem = new LineItem(productDto);
+        lineItems.remove(lineItem, lineItems.get(lineItem) - qty);
     }
 
     @Override
