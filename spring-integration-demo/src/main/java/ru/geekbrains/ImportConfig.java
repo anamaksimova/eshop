@@ -56,7 +56,7 @@ public class ImportConfig {
     @Bean
     public JpaUpdatingOutboundEndpointSpec jpaPersistHandler() {
         return Jpa.outboundAdapter(this.entityManagerFactory)
-                .entityClass(Object.class) // TODO указать класс нужной сущности
+                .entityClass(Category.class)
                 .persistMode(PersistMode.PERSIST);
     }
 
