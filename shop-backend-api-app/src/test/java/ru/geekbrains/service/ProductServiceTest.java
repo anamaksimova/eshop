@@ -6,6 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import ru.geekbrains.controller.dto.ProductDto;
 import ru.geekbrains.persist.ProductRepository;
+import ru.geekbrains.persist.model.Brand;
 import ru.geekbrains.persist.model.Category;
 import ru.geekbrains.persist.model.Product;
 
@@ -37,11 +38,15 @@ public class ProductServiceTest {
         Category expectedCategory = new Category();
         expectedCategory.setId(1L);
         expectedCategory.setName("Category name");
+        Brand expectedBrand = new Brand();
+        expectedBrand.setId(1L);
+        expectedBrand.setName("Brand name");
 
         Product expectedProduct = new Product();
         expectedProduct.setId(1L);
         expectedProduct.setName("Product name");
         expectedProduct.setCategory(expectedCategory);
+        expectedProduct.setBrand(expectedBrand);
         expectedProduct.setPictures(new ArrayList<>());
         expectedProduct.setPrice(new BigDecimal(12345));
 
@@ -55,10 +60,12 @@ public class ProductServiceTest {
         assertEquals(expectedProduct.getName(), opt.get().getName());
     }
 
-    @Test
-    public void testFindAll() {
+//    @Test
+//    public void testFindAll() {
+//
 //        when(productRepository.findAll(any(Specification.class), any(Pageable.class)))
 //                .thenReturn(Optional.of(expectedProduct));
-    }
+//
+//    }
 
 }
