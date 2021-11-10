@@ -1,5 +1,6 @@
 package ru.geekbrains.controller;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,9 +53,13 @@ public class CartControllerTest {
 
     @MockBean
     private SimpMessagingTemplate template;
+    @Autowired
+    private CartService cartService;
 
-
-    private CartService cartService = new CartServiceImpl();;
+    @BeforeEach
+    public void init() {
+        cartService = new CartServiceImpl();
+    }
 
     @Test
     public void testCart() throws Exception {
@@ -67,12 +72,11 @@ public class CartControllerTest {
         expectedProduct.setName("Product name");
         cartService.addProductQty(expectedProduct,  2);
 
-        List<LineItem> lineItems = cartService.getLineItems();
         mvc.perform(MockMvcRequestBuilders
                 .get("/cart/all")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(1)))
-                .andExpect(jsonPath("$.name", is(expectedProduct.getName())));
+                .andExpect(jsonPath("$.content[0].name", is(expectedProduct.getName())));
     }
 }
