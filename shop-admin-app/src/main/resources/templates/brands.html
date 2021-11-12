@@ -1,18 +1,21 @@
 
 <!doctype html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-
-<head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"/>
-    <title>EShop </title>
+<head th:replace="fragments/navigation.html :: head">
 </head>
+
+<!--<body>-->
+<!--<head>-->
+<!--    &lt;!&ndash; Required meta tags &ndash;&gt;-->
+<!--    <meta charset="utf-8">-->
+<!--    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">-->
+
+<!--    &lt;!&ndash; Bootstrap CSS &ndash;&gt;-->
+<!--    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"-->
+<!--          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">-->
+<!--    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"/>-->
+<!--    <title>EShop </title>-->
+<!--</head>-->
 
 <body>
 
@@ -22,7 +25,7 @@
 <div class="container">
     <div class="row py-2">
         <div sec:authorize="hasRole('ADMIN')"  class="col-12">
-            <a class="btn btn-primary" th:href="@{/brand/new}">Add Brand</a>
+            <a id="brand-btn" class="btn btn-primary" th:href="@{/brand/new}">Add Brand</a>
         </div>
 
 
@@ -43,7 +46,7 @@
 
                    <td>
                         <a class="btn btn-success" th:href="@{/brand/{id}(id = ${brand.id})}"><i class="fas fa-edit"></i></a>
-                        <form class="d-inline" th:method="delete" th:action="@{/brand/{id}(id = ${brand.id})}">
+                        <form id="delete-btn" class="d-inline" th:method="delete" th:action="@{/brand/{id}(id = ${brand.id})}">
                             <button type="submit" class="btn btn-danger"><i class="far fa-trash-alt"></i></button>
                         </form>
                     </td>
